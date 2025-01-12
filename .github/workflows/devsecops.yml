@@ -124,14 +124,17 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASS }}
-    
+    - name: Convert repository name to lowercase
+      id: repo-name
+      run: |
+        echo "REPO_NAME=$(echo ${{ github.event.repository.name }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
         context: .
         push: true
         tags: |
-          ${{ secrets.DOCKER_USER }}/${{ github.event.repository.name }}:latest
-          ${{ secrets.DOCKER_USER }}/${{ github.event.repository.name }}:${{ github.sha }}
-        cache-from: type=registry,ref=${{ secrets.DOCKER_USER }}/${{ github.event.repository.name }}:buildcache
-        cache-to: type=registry,ref=${{ secrets.DOCKER_USER }}/${{ github.event.repository.name }}:buildcache,mode=max
+          ${{ secrets.DOCKER_USER }}/${{ env.REPO_NAME }}:latest
+          ${{ secrets.DOCKER_USER }}/${{ env.REPO_NAME }}:${{ github.sha }}
+        cache-from: type=registry,ref=${{ secrets.DOCKER_USER }}/${{ env.REPO_NAME }}:buildcache
+        cache-to: type=registry,ref=${{ secrets.DOCKER_USER }}/${{ env.REPO_NAME }}:buildcache,mode=max
