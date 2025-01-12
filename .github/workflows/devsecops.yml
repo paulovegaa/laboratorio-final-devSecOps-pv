@@ -82,6 +82,25 @@ jobs:
           --out ./reports
           --failOnCVSS 7
           --enableRetired
+    - name: Parse results and set output variables
+      id: parse-results
+      run: |
+        # Extract counts by severity using jq
+        CRITICAL=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "CRITICAL")] | length')
+        HIGH=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "HIGH")] | length')
+        MEDIUM=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "MEDIUM")] | length')
+        LOW=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "LOW")] | length')
+        
+        echo "CRITICAL_COUNT=${CRITICAL}" >> $GITHUB_ENV
+        echo "HIGH_COUNT=${HIGH}" >> $GITHUB_ENV
+        echo "MEDIUM_COUNT=${MEDIUM}" >> $GITHUB_ENV
+        echo "LOW_COUNT=${LOW}" >> $GITHUB_ENV
+        
+        # Fail if critical or high vulnerabilities exist
+        if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
+          echo "::error::Found ${CRITICAL} CRITICAL and ${HIGH} HIGH vulnerabilities!"
+          exit 1
+        fi
     - name: Upload Test Result
       uses: actions/upload-artifact@master
       with:
