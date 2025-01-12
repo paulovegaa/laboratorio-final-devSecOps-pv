@@ -158,3 +158,6 @@ jobs:
       with:
         image-ref: 'paulovegaa/laboratorio-final-devsecops-pv:latest'
         format: 'table'
+        severity: 'CRITICAL,HIGH,MEDIUM'
+        ignore-unfixed: true
+        exit-code: '1'
