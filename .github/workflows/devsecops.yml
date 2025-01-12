@@ -27,10 +27,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
           REPO_NAME: ${{ github.event.repository.name }}
           REPO_OWNER: ${{ github.repository_owner }}
+          REPO_COMPLETE: ${{ github.repository_owner }}_${{ github.event.repository.name }}
         run: |
           echo "Validando el estado del Quality Gate... $SONAR_TOKEN , $REPO_NAME, $REPO_OWNER"
           analysisId=$(curl -s -u "$SONAR_TOKEN:" \
-            "https://sonarcloud.io/api/ce/component?component=REPO_OWNER_$REPO_NAME" | jq -r '.current.analysisId')
+            "https://sonarcloud.io/api/ce/component?component=$REPO_COMPLETE" | jq -r '.current.analysisId')
           echo "analysisId: $analysisId."
 
           qualityGateStatus=$(curl -s -u "$SONAR_TOKEN:" \
