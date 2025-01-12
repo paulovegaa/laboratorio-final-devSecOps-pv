@@ -19,7 +19,7 @@ jobs:
         with:
           args:
             -Dsonar.projectKey=${{ secrets.SONARCLOUD_PROJECTKEY }}
-            -Dsonar.organization=${{ secrets.SONARCLOUD_ORGANIZATION }
+            -Dsonar.organization=${{ secrets.SONARCLOUD_ORGANIZATION }}
           projectBaseDir: .
       - name: Validate Quality Gate
         env:
