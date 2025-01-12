@@ -87,10 +87,10 @@ jobs:
       run: |
         # Extract counts by severity using jq
         echo "leyendo carpeta reports $(ls ./reports)"
-        CRITICAL=$(grep -o "CRITICAL</span>" ./reports/dependency-check-report.html | wc -l)
-        HIGH=$(grep -o "HIGH</span>" ./reports/dependency-check-report.html | wc -l)
-        MEDIUM=$(grep -o "MEDIUM</span>" ./reports/dependency-check-report.html | wc -l)
-        LOW=$(grep -o "LOW</span>" ./reports/dependency-check-report.html | wc -l)
+        CRITICAL=$(grep -o "CRITICAL</td>" ./reports/dependency-check-report.html | wc -l)
+        HIGH=$(grep -o "HIGH</td>" ./reports/dependency-check-report.html | wc -l)
+        MEDIUM=$(grep -o "MEDIUM</td>" ./reports/dependency-check-report.html | wc -l)
+        LOW=$(grep -o "LOW</td>" ./reports/dependency-check-report.html | wc -l)
         
         echo "CRITICAL_COUNT=${CRITICAL}"
         echo "HIGH_COUNT=${HIGH}"
