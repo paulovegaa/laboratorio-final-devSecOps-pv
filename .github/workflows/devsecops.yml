@@ -87,6 +87,7 @@ jobs:
       run: |
         # Extract counts by severity using jq
         echo "leyendo carpeta $(ls .)"
+        echo "leyendo carpeta reports$(ls ./reports)"
         CRITICAL=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "CRITICAL")] | length')
         HIGH=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "HIGH")] | length')
         MEDIUM=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "MEDIUM")] | length')
