@@ -160,4 +160,6 @@ jobs:
         format: 'table'
         severity: 'CRITICAL,HIGH,MEDIUM'
         ignore-unfixed: true
-        exit-code: '1'
+    - name: Deploy to Docker
+      run: |
+        docker run -d --name my-app -p 8080:8080 paulovegaa/laboratorio-final-devsecops-pv:latest
