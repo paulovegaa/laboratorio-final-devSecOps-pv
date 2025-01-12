@@ -51,6 +51,10 @@ jobs:
             echo "Verificando existencia de vulnerabilidades medias..."
             vulnerabilitiesMajor=$(curl -s -u "$SONAR_TOKEN:" \
               "https://sonarcloud.io/api/issues/search?componentKeys=$REPO_NAME&types=VULNERABILITY&severities=MAJOR" | tee response.json | jq -r '.total')
+            respuesta=$(curl -s -u "$SONAR_TOKEN:" \
+              "https://sonarcloud.io/api/issues/search?componentKeys=$REPO_NAME&types=VULNERABILITY&severities=MAJOR")
+            echo "respuesta servicio:"
+            echo "$respuesta"
             echo "total de vulnerabilidades encontradas: $vulnerabilitiesMajor ."
             if [ "$vulnerabilitiesMajor" -gt 0 ]; then
               echo "Se encontraron $vulnerabilitiesMajor vulnerabilidades  medias. El proyecto no cumple con los estándares de seguridad."
