@@ -45,7 +45,7 @@ jobs:
             echo "total de vulnerabilidades encontradas: $vulnerabilities."
             if [ "$vulnerabilities" -gt 0 ]; then
               echo "Se encontraron $vulnerabilities vulnerabilidades críticas, bloqueantes. El proyecto no cumple con los estándares de seguridad."
-              #exit 1
+              exit 1
             fi
           else
             echo "Verificando existencia de vulnerabilidades medias..."
@@ -58,7 +58,7 @@ jobs:
             echo "total de vulnerabilidades encontradas: $vulnerabilitiesMajor ."
             if [ "$vulnerabilitiesMajor" -gt 0 ]; then
               echo "Se encontraron $vulnerabilitiesMajor vulnerabilidades  medias. El proyecto no cumple con los estándares de seguridad."
-              #exit 1
+              exit 1
             fi
             echo "El proyecto cumple con el Quality Gate y no tiene vulnerabilidades críticas. Continuando sin problemas."
           fi
