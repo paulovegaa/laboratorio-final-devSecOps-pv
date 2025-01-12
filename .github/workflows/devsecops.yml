@@ -88,10 +88,10 @@ jobs:
         # Extract counts by severity using jq
         echo "leyendo carpeta $(ls .)"
         echo "leyendo carpeta reports$(ls ./reports)"
-        CRITICAL=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "CRITICAL")] | length')
-        HIGH=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "HIGH")] | length')
-        MEDIUM=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "MEDIUM")] | length')
-        LOW=$(cat reports.json | jq -r '[.dependencies[].vulnerabilities[] | select(.severity == "LOW")] | length')
+        CRITICAL=$(grep -o "CRITICAL</span>" ./reportsdependency-check-report.html | wc -l)
+        HIGH=$(grep -o "HIGH</span>" ./reportsdependency-check-report.html | wc -l)
+        MEDIUM=$(grep -o "MEDIUM</span>" ./reportsdependency-check-report.html | wc -l)
+        LOW=$(grep -o "LOW</span>" ./reportsdependency-check-report.html | wc -l)
         
         echo "CRITICAL_COUNT=${CRITICAL}" >> $GITHUB_ENV
         echo "HIGH_COUNT=${HIGH}" >> $GITHUB_ENV
