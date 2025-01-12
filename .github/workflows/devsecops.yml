@@ -28,7 +28,7 @@ jobs:
           REPO_NAME: ${{ github.event.repository.name }}
           REPO_OWNER: ${{ github.repository_owner }}
         run: |
-          echo "Validando el estado del Quality Gate... $SONAR_TOKEN , $REPO_NAME"
+          echo "Validando el estado del Quality Gate... $SONAR_TOKEN , $REPO_NAME, $REPO_OWNER"
           analysisId=$(curl -s -u "$SONAR_TOKEN:" \
             "https://sonarcloud.io/api/ce/component?component=REPO_OWNER_$REPO_NAME" | jq -r '.current.analysisId')
           echo "analysisId: $analysisId."
