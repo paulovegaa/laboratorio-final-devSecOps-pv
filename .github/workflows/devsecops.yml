@@ -86,21 +86,20 @@ jobs:
       id: parse-results
       run: |
         # Extract counts by severity using jq
-        echo "leyendo carpeta $(ls .)"
-        echo "leyendo carpeta reports$(ls ./reports)"
+        echo "leyendo carpeta reports $(ls ./reports)"
         CRITICAL=$(grep -o "CRITICAL</span>" ./reports/dependency-check-report.html | wc -l)
         HIGH=$(grep -o "HIGH</span>" ./reports/dependency-check-report.html | wc -l)
         MEDIUM=$(grep -o "MEDIUM</span>" ./reports/dependency-check-report.html | wc -l)
         LOW=$(grep -o "LOW</span>" ./reports/dependency-check-report.html | wc -l)
         
-        echo "CRITICAL_COUNT=${CRITICAL}" >> $GITHUB_ENV
-        echo "HIGH_COUNT=${HIGH}" >> $GITHUB_ENV
-        echo "MEDIUM_COUNT=${MEDIUM}" >> $GITHUB_ENV
-        echo "LOW_COUNT=${LOW}" >> $GITHUB_ENV
+        echo "CRITICAL_COUNT=${CRITICAL}"
+        echo "HIGH_COUNT=${HIGH}"
+        echo "MEDIUM_COUNT=${MEDIUM}"
+        echo "LOW_COUNT=${LOW}"
         
         # Fail if critical or high vulnerabilities exist
-        if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
-          echo "::error::Found ${CRITICAL} CRITICAL and ${HIGH} HIGH vulnerabilities!"
+        if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ] || [ "$MEDIUM" -gt 0 ]; then
+          echo "::error::Found ${CRITICAL} CRITICAL, ${HIGH} HIGH and ${MEDIUM} MEDIUM vulnerabilities!"
           exit 1
         fi
     - name: Upload Test Result
